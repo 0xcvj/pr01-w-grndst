@@ -21,89 +21,104 @@
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/site.css">
 </head>
-<body>
+<body class="page-legal">
   <a href="#main" class="skip-link">Skip to content</a>
   <header class="site-header">
     <div class="header-inner">
-      <a href="/" class="brand">GRND Studio</a>
+      <a href="/#home" class="brand">[GRND]</a>
       <nav class="site-nav" aria-label="Primary">
-        <a href="/">Home</a>
-        <a href="/services/">Services</a>
-        <a href="/custom-software-development/">Custom Software Development</a>
-        <a href="/ai-powered-applications/">AI Applications</a>
-        <a href="/about/">About</a>
-        <a href="/contact/">Contact</a>
+        <a href="/#home">Home</a>
+        <a href="/#story">About</a>
+        <a href="/#services">Services</a>
+        <a href="/#contact">Contact</a>
       </nav>
       <button id="menuToggle" class="menu-toggle" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open menu">
         <span></span><span></span><span></span>
       </button>
       <nav id="mobileMenu" class="nav-mobile" aria-label="Mobile menu" data-open="false">
-        <a href="/">Home</a>
-        <a href="/services/">Services</a>
-        <a href="/custom-software-development/">Custom Software Development</a>
-        <a href="/ai-powered-applications/">AI Applications</a>
-        <a href="/about/">About</a>
-        <a href="/contact/">Contact</a>
+        <a href="/#home">Home</a>
+        <a href="/#story">About</a>
+        <a href="/#services">Services</a>
+        <a href="/#contact">Contact</a>
       </nav>
     </div>
   </header>
 
-  <main id="main">
-    <section class="section section-soft">
-      <div class="section-heading">
-        <span class="eyebrow">GRND Studio</span>
-        <h1>Terms</h1>
-        <p class="lead">These terms outline how GRND Studio typically scopes, delivers, and supports custom software development, AI-powered applications, automation systems, and related project work.</p>
-      </div>
-      <p class="text-muted">Updated: March 5, 2026</p>
-    </section>
-    <section class="section">
-      <div class="section-heading">
-        <h2>Project scope and proposals</h2>
-        <p class="lead">Every engagement starts with a defined problem, a proposed scope, and a delivery approach.</p>
-      </div>
-      <div class="card">
-        <p class="text-muted">Work is governed by the written proposal, scope, timeline, or agreement accepted for the specific engagement. That documentation defines what GRND Studio is building, whether the work covers strategy, custom software, AI implementation, automation, integrations, support, or phased delivery, and what is outside the agreed scope.</p>
-      </div>
-    </section>
-    <section class="section">
-      <div class="section-heading">
-        <h2>Client responsibilities</h2>
-        <p class="lead">Delivery depends on timely access, feedback, and decision-making from the client side.</p>
-      </div>
-      <div class="card">
-        <p class="text-muted">Clients are responsible for providing accurate project information, timely approvals, access to required systems, and any third-party credentials or materials needed for delivery. Delays in feedback, access, or approvals can affect timelines and milestone planning.</p>
+  <main id="main" class="legal-main">
+    <section class="legal-hero">
+      <div class="legal-hero-inner">
+        <div class="legal-hero-copy">
+          <span class="legal-kicker">GRND Studio Terms</span>
+          <div class="section-heading legal-heading">
+            <span class="eyebrow">GRND Studio</span>
+            <h1>Terms</h1>
+            <p class="lead">You bring the problem, we define the scope, build the solution, and agree the commercial terms around it. This page explains the basics of how that usually works.</p>
+          </div>
+        </div>
+        <aside class="legal-hero-meta" aria-label="Terms details">
+          <p class="legal-meta-label">Updated</p>
+          <p class="legal-meta-value">March 5, 2026</p>
+          <p class="text-muted legal-meta-copy">Straightforward terms, written to match the tone of the rest of the site.</p>
+        </aside>
       </div>
     </section>
-    <section class="section">
-      <div class="section-heading">
-        <h2>Payments, ownership, and support</h2>
-        <p class="lead">Commercial terms are set per project, not assumed from the public website alone.</p>
-      </div>
-      <div class="card">
-        <p class="text-muted">Payment schedules, intellectual property transfer, licensing, maintenance, and support commitments are defined in the applicable project agreement. Unless stated otherwise in writing, GRND Studio retains ownership of pre-existing methods, reusable frameworks, internal tooling, and other background intellectual property used to deliver the work.</p>
+    <section class="section legal-section">
+      <div class="legal-grid">
+        <div class="section-heading legal-section-heading">
+          <span class="eyebrow">Scope</span>
+          <h2>Project scope and proposals</h2>
+          <p class="lead">Every project starts with a clear problem, a proposed scope, and a plan to deliver it.</p>
+        </div>
+        <div class="card legal-card">
+          <p class="text-muted">The actual work is governed by the written proposal, scope, timeline, or agreement accepted for that engagement. That documentation defines what GRND Studio is building, whether the work covers strategy, custom software, AI implementation, automation, integrations, support, or phased delivery, and what sits outside the agreed scope.</p>
+        </div>
       </div>
     </section>
-    <section class="section">
-      <div class="section-heading">
-        <h2>Liability and governing documents</h2>
-        <p class="lead">This page is a high-level summary and does not replace project-specific signed terms.</p>
+    <section class="section legal-section legal-section-contrast">
+      <div class="legal-grid">
+        <div class="section-heading legal-section-heading">
+          <span class="eyebrow">Collaboration</span>
+          <h2>Client responsibilities</h2>
+          <p class="lead">Good delivery depends on access, feedback, and decisions arriving on time.</p>
+        </div>
+        <div class="card legal-card">
+          <p class="text-muted">Clients are responsible for providing accurate project information, timely approvals, access to required systems, and any third-party credentials or materials needed to do the work. If feedback, access, or approvals are delayed, timelines and milestone planning can move with them.</p>
+        </div>
       </div>
-      <div class="card">
-        <p class="text-muted">Each engagement may include additional terms covering confidentiality, data handling, warranties, acceptance, and allocation of risk. Where a signed agreement exists, that agreement governs the relationship. If you have a question about current terms for a proposed project, contact us before work begins.</p>
+    </section>
+    <section class="section legal-section">
+      <div class="legal-grid">
+        <div class="section-heading legal-section-heading">
+          <span class="eyebrow">Commercials</span>
+          <h2>Payments, ownership, and support</h2>
+          <p class="lead">Commercial terms are agreed per project, not guessed from the public site.</p>
+        </div>
+        <div class="card legal-card">
+          <p class="text-muted">Payment schedules, intellectual property transfer, licensing, maintenance, and support commitments are defined in the applicable project agreement. Unless we state otherwise in writing, GRND Studio keeps ownership of pre-existing methods, reusable frameworks, internal tooling, and other background intellectual property used to deliver the work.</p>
+        </div>
       </div>
-      <div class="actions">
-        <a class="btn" href="/contact/">Discuss your project scope</a>
-        <a class="btn btn-secondary" href="/ai-powered-applications/">AI-powered applications</a>
+    </section>
+    <section class="section legal-section">
+      <div class="legal-grid">
+        <div class="section-heading legal-section-heading">
+          <span class="eyebrow">Governing</span>
+          <h2>Liability and governing documents</h2>
+          <p class="lead">This page gives the overview. Signed project terms still win.</p>
+        </div>
+        <div class="card legal-card">
+          <p class="text-muted">A specific engagement may include additional terms covering confidentiality, data handling, warranties, acceptance, and allocation of risk. If a signed agreement exists, that agreement governs the relationship. If you want clarity on current terms for a proposed project, ask before work begins.</p>
+          <a class="text-link legal-inline-link" href="/#contact">Discuss a project</a>
+        </div>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <div>GRND STUDIO</div>
+    <div>[GRND]</div>
     <div class="footer-links">
+      <a href="/">Home</a>
       <a href="/privacy/">Privacy</a>
-      <a href="/contact/">Contact</a>
+      <a href="mailto:info@grnd.studio">Email</a>
     </div>
     <small class="text-muted">(c) <span id="year"></span> GRND STUDIO</small>
   </footer>
