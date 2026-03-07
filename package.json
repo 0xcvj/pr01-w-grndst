@@ -1,0 +1,9 @@
+{
+  "name": "grnd-studio-site",
+  "private": true,
+  "version": "1.0.0",
+  "description": "GRND Studio commercial SEO website.",
+  "scripts": {
+    "dev": "bunx serve -l 4173 ."
+  }
+}

@@ -1,0 +1,40 @@
+GRND STUDIO — Project Scoping Checklist
+--------------------------------------
+Date:
+
+1) What is the business problem?
+- Brief process description:
+- Who owns the process today:
+- Cost of current manual workaround:
+
+2) Outcomes you want in 90 days
+- Metric 1 (baseline → target):
+- Metric 2 (baseline → target):
+- Metric 3 (baseline → target):
+
+3) Process details
+- Number of team members involved:
+- Systems currently used:
+- Manual handoffs causing delays:
+
+4) Constraints
+- Budget range:
+- Target launch date:
+- Compliance/security requirements:
+- Internal approvals needed:
+
+5) Data and ownership
+- Data owners:
+- Data quality risks:
+- What will be in MVP:
+- What is out of scope:
+
+6) Risks and exceptions
+- Known edge cases:
+- People affected by change:
+- Training support needed:
+
+7) Post-launch plan
+- Who monitors quality:
+- Who reviews KPIs:
+- Frequency of review:
