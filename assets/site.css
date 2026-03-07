@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&display=swap');
 
 :root {
   --bg: #f5f8fc;
@@ -19,7 +19,7 @@
   --accent-green: #0f203b;
   --accent-soft: rgba(23, 54, 93, 0.14);
   --font-display: 'Bebas Neue', 'Arial Narrow', sans-serif;
-  --font-body: 'Manrope', 'Segoe UI', sans-serif;
+  --font-body: 'Outfit', 'Segoe UI', sans-serif;
   --section-inner: 1680px;
   --section-gutter: 22px;
   --container: min(var(--section-inner), calc(100vw - (var(--section-gutter) * 2)));
