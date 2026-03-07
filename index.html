@@ -12,21 +12,21 @@
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="GRND Studio builds custom software, AI-powered applications, and automation tools for growing businesses. Based in the Netherlands.">
+<meta name="description" content="GRND Studio builds custom software, AI Integration, and automation tools for growing businesses. Based in the Netherlands.">
 <meta name="keywords" content="custom software development, AI applications, automation tools, business software, internal tools, dashboards, Netherlands, GRND Studio">
 <meta name="author" content="GRND STUDIO">
 <meta name="robots" content="index, follow">
-<meta property="og:title" content="GRND STUDIO — Custom Software & AI Development">
-<meta property="og:description" content="GRND Studio builds custom software, AI-powered applications, and automation tools for growing businesses. Based in the Netherlands.">
+<meta property="og:title" content="GRND STUDIO — Custom Software & AI Integration">
+<meta property="og:description" content="GRND Studio builds custom software, AI Integration, and automation tools for growing businesses. Based in the Netherlands.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://grnd.studio">
 <meta property="og:image" content="https://grnd.studio/og-image.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@grnd.studio_">
-<meta name="twitter:title" content="GRND STUDIO — Custom Software & AI Development">
-<meta name="twitter:description" content="GRND Studio builds custom software, AI-powered applications, and automation tools for growing businesses.">
+<meta name="twitter:title" content="GRND STUDIO — Custom Software & AI Integration">
+<meta name="twitter:description" content="GRND Studio builds custom software, AI Integration, and automation tools for growing businesses.">
 <link rel="canonical" href="https://grnd.studio">
-<title>GRND STUDIO — Custom Software & AI Development</title>
+<title>GRND STUDIO — Custom Software & AI Integration</title>
 <link rel="icon" type="image/png" href="3.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -358,8 +358,8 @@ body {
 }
 
 .hero-artwork {
-  width: clamp(280px, 28vw, 460px);
-  height: clamp(280px, 28vw, 460px);
+  width: clamp(336px, 33.6vw, 552px);
+  height: clamp(336px, 33.6vw, 552px);
   background: var(--black);
   border-radius: 4px;
   position: relative;
@@ -824,8 +824,8 @@ body {
   }
 
   .hero-artwork {
-    width: clamp(180px, 50vw, 240px);
-    height: clamp(180px, 50vw, 240px);
+    width: clamp(216px, 60vw, 288px);
+    height: clamp(216px, 60vw, 288px);
   }
 
   .home-headline {
@@ -919,8 +919,8 @@ body {
   }
 
   .hero-artwork {
-    width: 160px;
-    height: 160px;
+    width: 192px;
+    height: 192px;
   }
 
   .service-card {
@@ -1005,9 +1005,9 @@ body {
         <h1 class="home-headline reveal">
           <span>We Build The</span>
           <span>Software Your</span>
-          <span>Business Runs On.</span>
+          <span>Business Needs.</span>
         </h1>
-        <p class="home-desc reveal reveal-delay-2">Custom applications, AI-powered tools, and smart automation for companies that need technology that works — not just looks good.</p>
+        <p class="home-desc reveal reveal-delay-2">Custom applications, Agentic tools, and automations for companies that need technology that works — not just looks good.</p>
          <a href="#contact" class="hero-cta reveal reveal-delay-3">Get in Touch</a>
       </div>
       <div class="home-visual">
@@ -1026,9 +1026,9 @@ body {
       <div class="story-content">
         <h2 class="section-title reveal reveal-delay-1">WHO WE ARE</h2>
         <div class="story-body">
-          <p class="reveal reveal-delay-2">GRND Studio is a software development studio based in the Netherlands. Since 2017, we've built custom applications, AI-powered tools, and automation systems for businesses that need reliable technology.</p>
-          <p class="reveal reveal-delay-3">We work with SMBs and scale-ups that have outgrown off-the-shelf solutions. When your business needs software built around your processes — not the other way around — that's where we come in.</p>
-          <p class="reveal reveal-delay-4">We work directly with founders and decision-makers. No account managers, no unnecessary layers. You tell us the problem, we build the solution.</p>
+          <p class="reveal reveal-delay-2">GRND Studio is a software development studio based in the Netherlands. Since 2017, we've built custom applications, AI Integrations, and automation systems for businesses that want to spend less time on manual work or generate more income by reducing operational tasks.</p>
+          <p class="reveal reveal-delay-3">We work with SMBs, Service businesses and scale-ups that have outgrown off-the-shelf solutions. solutions tailored to the unique needs of our clients — that's where we come in.</p>
+          <p class="reveal reveal-delay-4">You tell us the problem, we build the solution.</p>
         </div>
       </div>
     </div>
@@ -1044,7 +1044,7 @@ body {
           <div class="service-card-overlay"></div>
           <span class="service-card-label">Custom Software<br>&amp; Tools</span>
         </article>
-        <article class="service-card card-2 reveal reveal-delay-2" tabindex="0" aria-label="AI-Powered Applications">
+        <article class="service-card card-2 reveal reveal-delay-2" tabindex="0" aria-label="AI Integrations">
           <div class="service-card-bg"></div>
           <div class="service-card-overlay"></div>
           <span class="service-card-label">AI-Powered<br>Applications</span>
@@ -1280,12 +1280,16 @@ body {
     let dots = [];
     let mouse = { x: -9999, y: -9999, active: false };
     let animId;
-    const SPACING = 18;
-    const DOT_RADIUS = 1.5;
+    const SPACING = 21;
+    const DOT_RADIUS = 2.2;
     const SCATTER_RADIUS = 80;
     const SCATTER_FORCE = 12;
     const RETURN_SPEED = 0.06;
     const FRICTION = 0.85;
+    const WAVE_AMPLITUDE_X = 4.8;
+    const WAVE_AMPLITUDE_Y = 3.6;
+    const WAVE_FREQUENCY = 0.028;
+    const WAVE_SPEED = 0.00135;
 
     function initDots() {
       const rect = container.getBoundingClientRect();
@@ -1305,8 +1309,8 @@ body {
           const homeX = offsetX + c * SPACING;
           const homeY = offsetY + r * SPACING;
           dots.push({
-            homeX: homeX,
-            homeY: homeY,
+            baseHomeX: homeX,
+            baseHomeY: homeY,
             x: homeX,
             y: homeY,
             vx: 0,
@@ -1319,10 +1323,14 @@ body {
 
     function animate() {
       const rect = container.getBoundingClientRect();
+      const now = performance.now();
       ctx.clearRect(0, 0, rect.width, rect.height);
 
       for (let i = 0; i < dots.length; i++) {
         const d = dots[i];
+        const wavePhase = (d.baseHomeX + d.baseHomeY) * WAVE_FREQUENCY;
+        const targetHomeX = d.baseHomeX + Math.sin(now * WAVE_SPEED + wavePhase) * WAVE_AMPLITUDE_X;
+        const targetHomeY = d.baseHomeY + Math.cos(now * (WAVE_SPEED * 0.82) + wavePhase) * WAVE_AMPLITUDE_Y;
 
         // Mouse repulsion
         if (mouse.active) {
@@ -1339,8 +1347,8 @@ body {
         }
 
         // Spring back to home
-        d.vx += (d.homeX - d.x) * RETURN_SPEED;
-        d.vy += (d.homeY - d.y) * RETURN_SPEED;
+        d.vx += (targetHomeX - d.x) * RETURN_SPEED;
+        d.vy += (targetHomeY - d.y) * RETURN_SPEED;
 
         // Apply friction
         d.vx *= FRICTION;
@@ -1352,8 +1360,8 @@ body {
 
         // Distance from home for dynamic sizing/opacity
         const distFromHome = Math.sqrt(
-          (d.x - d.homeX) * (d.x - d.homeX) +
-          (d.y - d.homeY) * (d.y - d.homeY)
+          (d.x - targetHomeX) * (d.x - targetHomeX) +
+          (d.y - targetHomeY) * (d.y - targetHomeY)
         );
         const displacement = Math.min(distFromHome / 40, 1);
         const radius = DOT_RADIUS + displacement * 1.5;
@@ -1427,7 +1435,7 @@ body {
   "name": "GRND STUDIO",
   "url": "https://grnd.studio",
   "email": "info@grnd.studio",
-  "description": "Software development studio specializing in custom applications, AI-powered tools, and automation systems for growing businesses.",
+  "description": "Software development studio specializing in custom applications, AI Integration, and automation systems for growing businesses.",
   "address": {
     "@type": "PostalAddress",
     "addressCountry": "NL"

@@ -117,12 +117,16 @@
     var dots = [];
     var mouse = { x: -9999, y: -9999, active: false };
     var animId;
-    var SPACING = 18;
-    var DOT_RADIUS = 1.5;
+    var SPACING = 21;
+    var DOT_RADIUS = 2.2;
     var SCATTER_RADIUS = 80;
     var SCATTER_FORCE = 12;
     var RETURN_SPEED = 0.06;
     var FRICTION = 0.85;
+    var WAVE_AMPLITUDE_X = 4.8;
+    var WAVE_AMPLITUDE_Y = 3.6;
+    var WAVE_FREQUENCY = 0.028;
+    var WAVE_SPEED = 0.00135;
 
     function initDots() {
       var rect = container.getBoundingClientRect();
@@ -142,8 +146,8 @@
           var homeX = offsetX + c * SPACING;
           var homeY = offsetY + r * SPACING;
           dots.push({
-            homeX: homeX,
-            homeY: homeY,
+            baseHomeX: homeX,
+            baseHomeY: homeY,
             x: homeX,
             y: homeY,
             vx: 0,
@@ -156,10 +160,14 @@
 
     function animate() {
       var rect = container.getBoundingClientRect();
+      var now = window.performance && window.performance.now ? window.performance.now() : Date.now();
       ctx.clearRect(0, 0, rect.width, rect.height);
 
       for (var i = 0; i < dots.length; i += 1) {
         var d = dots[i];
+        var wavePhase = (d.baseHomeX + d.baseHomeY) * WAVE_FREQUENCY;
+        var targetHomeX = d.baseHomeX + Math.sin(now * WAVE_SPEED + wavePhase) * WAVE_AMPLITUDE_X;
+        var targetHomeY = d.baseHomeY + Math.cos(now * (WAVE_SPEED * 0.82) + wavePhase) * WAVE_AMPLITUDE_Y;
 
         if (mouse.active) {
           var dx = d.x - mouse.x;
@@ -174,16 +182,16 @@
           }
         }
 
-        d.vx += (d.homeX - d.x) * RETURN_SPEED;
-        d.vy += (d.homeY - d.y) * RETURN_SPEED;
+        d.vx += (targetHomeX - d.x) * RETURN_SPEED;
+        d.vy += (targetHomeY - d.y) * RETURN_SPEED;
         d.vx *= FRICTION;
         d.vy *= FRICTION;
         d.x += d.vx;
         d.y += d.vy;
 
         var distFromHome = Math.sqrt(
-          (d.x - d.homeX) * (d.x - d.homeX) +
-          (d.y - d.homeY) * (d.y - d.homeY)
+          (d.x - targetHomeX) * (d.x - targetHomeX) +
+          (d.y - targetHomeY) * (d.y - targetHomeY)
         );
         var displacement = Math.min(distFromHome / 40, 1);
         var radius = DOT_RADIUS + displacement * 1.5;
