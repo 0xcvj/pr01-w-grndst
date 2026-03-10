@@ -276,11 +276,14 @@ body.loading {
 
 .hero-line:nth-child(1) { --spread-multiplier: 1; }
 .hero-line:nth-child(2) { --spread-multiplier: 0.6; }
-.hero-line:nth-child(3) { --spread-multiplier: 0.3; }
+.hero-line:nth-child(3) { --spread-multiplier: 0.25; }
 
-.hero-line:nth-child(1) .hero-text { transition-delay: 0s; }
-.hero-line:nth-child(2) .hero-text { transition-delay: 0.06s; }
-.hero-line:nth-child(3) .hero-text { transition-delay: 0.12s; }
+.hero-line:nth-child(1) .hero-text,
+.hero-line:nth-child(1) .hero-icon { transition-delay: 0s; }
+.hero-line:nth-child(2) .hero-text,
+.hero-line:nth-child(2) .hero-icon { transition-delay: 0.08s; }
+.hero-line:nth-child(3) .hero-text,
+.hero-line:nth-child(3) .hero-icon { transition-delay: 0.16s; }
 
 .hero-text.white { color: var(--white); }
 .hero-text.black { color: var(--black); }
@@ -292,6 +295,8 @@ body.loading {
   justify-content: center;
   flex-shrink: 0;
   padding: 0 clamp(0.8rem, 3vw, 3rem);
+  transform: translateY(var(--scroll-rise, 0));
+  transition: transform 0.1s ease-out;
 }
 
 .hero-icon svg {
@@ -324,27 +329,33 @@ body.loading {
   text-align: center;
   z-index: 10;
   pointer-events: none;
+  opacity: var(--scroll-fade, 1);
+  transition: transform 0.15s ease-out, opacity 0.15s ease-out;
 }
 
 .hero-label-ai {
   top: 5%;
   right: 12%;
+  transform: translate(calc(var(--scroll-label, 0) * -15vw), calc(var(--scroll-label, 0) * 10vh));
 }
 
 .hero-label-web {
   top: 22%;
   left: 12%;
+  transform: translate(calc(var(--scroll-label, 0) * 15vw), calc(var(--scroll-label, 0) * 5vh));
 }
 
 .hero-label-system {
   bottom: 28%;
   left: 5%;
   text-align: right;
+  transform: translate(calc(var(--scroll-label, 0) * 15vw), calc(var(--scroll-label, 0) * -5vh));
 }
 
 .hero-label-maintenance {
   bottom: 12%;
   right: 7%;
+  transform: translate(calc(var(--scroll-label, 0) * -15vw), calc(var(--scroll-label, 0) * -10vh));
 }
 
 /* Work with us button in hero */
@@ -352,6 +363,9 @@ body.loading {
   position: absolute;
   right: 2%;
   top: 52%;
+  transform: translateY(var(--scroll-rise, 0));
+  opacity: var(--scroll-fade, 1);
+  transition: transform 0.1s ease-out, opacity 0.1s ease-out;
 }
 
 .btn-work-with-us {

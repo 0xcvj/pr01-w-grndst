@@ -368,6 +368,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const progress = Math.min(Math.max(scrollY / (heroBottom * 0.5), 0), 1);
     const spread = progress * 15; // 15vw max spread
     heroContent.style.setProperty('--scroll-spread', spread + 'vw');
+    heroContent.style.setProperty('--scroll-rise', (progress * -8) + 'vh');
+    heroContent.style.setProperty('--scroll-label', progress);
+    heroContent.style.setProperty('--scroll-fade', 1 - progress);
   }
 
   window.addEventListener('scroll', handleHeroScroll, { passive: true });
