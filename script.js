@@ -388,3 +388,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
+// ===== CURSOR DOT FOLLOWER =====
+(function () {
+  const dot = document.createElement('div');
+  dot.classList.add('cursor-dot');
+  document.body.appendChild(dot);
+
+  document.addEventListener('mousemove', function (e) {
+    dot.style.left = e.clientX + 'px';
+    dot.style.top = e.clientY + 'px';
+  });
+
+  document.addEventListener('mouseleave', function () {
+    dot.style.opacity = '0';
+  });
+
+  document.addEventListener('mouseenter', function () {
+    dot.style.opacity = '1';
+  });
+})();
