@@ -195,12 +195,14 @@ function initLoader() {
       });
     });
 
-    // Capture current rotation from the spin animation before killing it
+    // Capture current rotation and freeze icons at current visual state
     const currentRotations = [];
     loaderIcons.forEach(icon => {
       const computed = getComputedStyle(icon).transform;
       let angle = 0;
       if (computed && computed !== 'none') {
+        // Set current transform inline BEFORE killing animation to prevent freeze frame
+        icon.style.transform = computed;
         const match = computed.match(/matrix\(([^)]+)\)/);
         if (match) {
           const values = match[1].split(',').map(Number);
@@ -218,9 +220,11 @@ function initLoader() {
     loaderIcons.forEach((icon, i) => {
       const { dx, dy, sx, sy } = targets[i];
       const startRot = currentRotations[i];
+      const s = Math.min(sx, sy); // uniform scale to prevent distortion
       const anim = icon.animate([
         { transform: `translate(0, 0) scale(1) rotate(${startRot}deg)`, offset: 0 },
-        { transform: `translate(${dx}px, ${dy}px) scale(${sx}, ${sy}) rotate(0deg)`, offset: 1 }
+        { transform: `translate(${dx * 0.5}px, ${dy * 0.3}px) scale(${1 + (s - 1) * 0.5}) rotate(${startRot * 0.3}deg)`, offset: 0.4 },
+        { transform: `translate(${dx}px, ${dy}px) scale(${s}) rotate(0deg)`, offset: 1 }
       ], {
         duration: DURATION,
         delay: i * 100,
@@ -231,25 +235,28 @@ function initLoader() {
     });
 
     Promise.all(animations).then(() => {
-      // Make real hero icons visible
-      heroContent.classList.add('hero-icons-visible');
+      // Use rAF to ensure hero icon swap happens in a single paint frame
+      requestAnimationFrame(() => {
+        // Make real hero icons visible
+        heroContent.classList.add('hero-icons-visible');
 
-      // Hide loader icons
-      loaderIcons.forEach(icon => { icon.style.visibility = 'hidden'; });
+        // Hide loader icons
+        loaderIcons.forEach(icon => { icon.style.visibility = 'hidden'; });
 
-      // Trigger hero text animations
-      hero.classList.add('hero-animate');
+        // Trigger hero text animations
+        hero.classList.add('hero-animate');
 
-      // Fade out loader overlay
-      loader.classList.add('fade-out');
+        // Fade out loader overlay
+        loader.classList.add('fade-out');
 
-      // Restore scrolling
-      document.body.classList.remove('loading');
+        // Restore scrolling
+        document.body.classList.remove('loading');
 
-      // Remove loader from DOM after fade
-      loader.addEventListener('transitionend', () => {
-        loader.remove();
-      }, { once: true });
+        // Remove loader from DOM after fade
+        loader.addEventListener('transitionend', () => {
+          loader.remove();
+        }, { once: true });
+      });
     });
   }
 

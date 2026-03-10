@@ -114,7 +114,7 @@ button {
 
 /* ===== CSS VARIABLES ===== */
 :root {
-  --yellow: #efff84;
+  --yellow: #0f4280;
   --gray: #d9d9d9;
   --black: #000;
   --white: #fff;
@@ -316,7 +316,7 @@ body.loading {
 /* Service labels on hero */
 .hero-service-label {
   font-family: 'sharpGroteskSemiBold13', 'sharpGrotesk', sans-serif;
-  font-size: clamp(0.5rem, 1vw, 0.875rem);
+  font-size: clamp(0.65rem, 1.3vw, 1.1rem);
   letter-spacing: 0.05em;
   text-transform: uppercase;
   position: absolute;
@@ -327,30 +327,30 @@ body.loading {
 }
 
 .hero-label-ai {
-  top: 8%;
-  right: 22%;
+  top: 5%;
+  right: 12%;
 }
 
 .hero-label-web {
-  top: 28%;
-  left: 16%;
+  top: 22%;
+  left: 12%;
 }
 
 .hero-label-system {
-  bottom: 25%;
-  left: 8%;
+  bottom: 28%;
+  left: 5%;
   text-align: right;
 }
 
 .hero-label-maintenance {
-  bottom: 18%;
-  right: 18%;
+  bottom: 12%;
+  right: 7%;
 }
 
 /* Work with us button in hero */
 .hero-cta {
   position: absolute;
-  right: 12%;
+  right: 2%;
   top: 52%;
 }
 
