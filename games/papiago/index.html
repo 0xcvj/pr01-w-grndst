@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PapiaGo — Learn Papiamento</title>
+  <meta name="description" content="PapiaGo — The fun, island-inspired app for learning Papiamento. Bite-sized lessons, daily quests, leaderboards and more." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Fredoka One', 'cursive'],
+            body: ['Nunito', 'sans-serif'],
+          },
+          colors: {
+            sand: '#F5EDD8',
+            'sand-dark': '#E8D9B8',
+            cactus: '#5A8F5A',
+            'cactus-light': '#7BC47B',
+            coral: '#FF7043',
+            'coral-light': '#FF8A65',
+            gold: '#F4A828',
+            'gold-light': '#FFD166',
+            turquoise: '#2BBCB4',
+            'turquoise-light': '#4DD9D1',
+            pink: '#FF6B9D',
+            'pink-light': '#FF9DBF',
+            brown: '#7B4B2A',
+            'brown-light': '#A0683E',
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Nunito', sans-serif;
+      background-color: #F5EDD8;
+      overflow-x: hidden;
+    }
+
+    /* ── Desert background pattern ───────────────── */
+    .desert-bg {
+      background-color: #F5EDD8;
+      background-image:
+        radial-gradient(circle at 10% 20%, rgba(255,112,67,0.08) 0%, transparent 50%),
+        radial-gradient(circle at 90% 80%, rgba(43,188,180,0.10) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(244,168,40,0.06) 0%, transparent 60%);
+    }
+
+    /* ── Floating cactus SVG decorations ─────────── */
+    .cactus-decoration { pointer-events: none; user-select: none; }
+
+    /* ── Phone mockup ─────────────────────────────── */
+    .phone-mockup {
+      position: relative;
+      width: 260px;
+      border-radius: 40px;
+      background: #1a1a1a;
+      box-shadow:
+        0 0 0 2px #333,
+        0 30px 80px rgba(0,0,0,0.35),
+        0 10px 30px rgba(0,0,0,0.2);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .phone-mockup::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 100px; height: 28px;
+      background: #1a1a1a;
+      border-radius: 0 0 20px 20px;
+      z-index: 10;
+    }
+    .phone-mockup img {
+      width: 100%;
+      display: block;
+      border-radius: 38px;
+    }
+    .phone-mockup.tilted-left  { transform: rotate(-6deg) translateY(20px); }
+    .phone-mockup.tilted-right { transform: rotate(6deg)  translateY(20px); }
+
+    /* ── Hero title ───────────────────────────────── */
+    .hero-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(4rem, 14vw, 10rem);
+      line-height: 0.9;
+      letter-spacing: -2px;
+      color: #7B4B2A;
+      -webkit-text-stroke: 2px rgba(123,75,42,0.2);
+    }
+
+    /* ── Section headings ─────────────────────────── */
+    .section-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(2.2rem, 6vw, 3.5rem);
+      line-height: 1.1;
+      color: #7B4B2A;
+    }
+
+    /* ── Blob shapes ──────────────────────────────── */
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.25;
+      pointer-events: none;
+    }
+
+    /* ── Pill badge ───────────────────────────────── */
+    .pill {
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* ── Feature card ─────────────────────────────── */
+    .feature-card {
+      background: white;
+      border-radius: 24px;
+      padding: 2rem;
+      box-shadow: 0 4px 24px rgba(123,75,42,0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .feature-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 40px rgba(123,75,42,0.15);
+    }
+
+    /* ── CTA button ───────────────────────────────── */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 36px;
+      border-radius: 999px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.15rem;
+      letter-spacing: 0.02em;
+      color: white;
+      background: linear-gradient(135deg, #FF7043, #F4A828);
+      box-shadow: 0 8px 24px rgba(255,112,67,0.4);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 14px 32px rgba(255,112,67,0.5);
+    }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 36px;
+      border-radius: 999px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.15rem;
+      letter-spacing: 0.02em;
+      color: #7B4B2A;
+      background: white;
+      box-shadow: 0 4px 16px rgba(123,75,42,0.12);
+      border: 2px solid rgba(123,75,42,0.15);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .btn-secondary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px rgba(123,75,42,0.2);
+    }
+
+    /* ── Nav ──────────────────────────────────────── */
+    nav a {
+      font-weight: 700;
+      color: #7B4B2A;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: #FF7043; }
+
+    /* ── Animations ───────────────────────────────── */
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-18px); }
+    }
+    @keyframes float2 {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50%       { transform: translateY(-12px) rotate(4deg); }
+    }
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.88); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .float  { animation: float  4s ease-in-out infinite; }
+    .float2 { animation: float2 5s ease-in-out infinite; }
+    .float3 { animation: float  6s ease-in-out infinite 1s; }
+
+    .fade-up   { animation: fadeSlideUp 0.7s ease both; }
+    .scale-in  { animation: scaleIn    0.7s ease both; }
+    .delay-1   { animation-delay: 0.1s; }
+    .delay-2   { animation-delay: 0.2s; }
+    .delay-3   { animation-delay: 0.35s; }
+    .delay-4   { animation-delay: 0.5s; }
+
+    .marquee-track {
+      display: flex;
+      white-space: nowrap;
+      animation: marquee 22s linear infinite;
+    }
+    .marquee-wrapper { overflow: hidden; }
+
+    /* ── Scroll-reveal via IntersectionObserver ───── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── Steps ────────────────────────────────────── */
+    .step-number {
+      font-family: 'Fredoka One', cursive;
+      font-size: 2rem;
+      width: 56px; height: 56px;
+      border-radius: 999px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      color: white;
+    }
+
+    /* ── Responsive phone stack ───────────────────── */
+    @media (max-width: 640px) {
+      .phone-mockup { width: 200px; }
+      .phone-mockup.tilted-left  { transform: rotate(-4deg) translateY(10px); }
+      .phone-mockup.tilted-right { transform: rotate(4deg)  translateY(10px); }
+    }
+
+    /* ── Footer ───────────────────────────────────── */
+    footer { background: #3D2010; color: #F5EDD8; }
+
+    /* wavy divider */
+    .wave-divider svg { display: block; }
+
+    /* ── Mascot GIFs ──────────────────────────────── */
+    .mascot {
+      pointer-events: none;
+      user-select: none;
+      position: absolute;
+      z-index: 20;
+    }
+    .mascot img { display: block; }
+
+    /* Mascot speech bubble */
+    .mascot-bubble {
+      position: absolute;
+      background: white;
+      border-radius: 16px;
+      padding: 8px 14px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 0.8rem;
+      color: #7B4B2A;
+      white-space: nowrap;
+      box-shadow: 0 4px 16px rgba(123,75,42,0.15);
+      pointer-events: none;
+    }
+    .mascot-bubble::after {
+      content: '';
+      position: absolute;
+      width: 10px; height: 10px;
+      background: white;
+    }
+    .mascot-bubble.below::after {
+      top: -5px; left: 50%;
+      transform: translateX(-50%) rotate(45deg);
+    }
+    .mascot-bubble.left::after {
+      right: -5px; top: 50%;
+      transform: translateY(-50%) rotate(45deg);
+    }
+    .mascot-bubble.right::after {
+      left: -5px; top: 50%;
+      transform: translateY(-50%) rotate(45deg);
+    }
+
+    @keyframes mascot-bounce {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      30%       { transform: translateY(-10px) rotate(-3deg); }
+      60%       { transform: translateY(-5px) rotate(2deg); }
+    }
+    @keyframes mascot-sway {
+      0%, 100% { transform: rotate(-4deg); }
+      50%       { transform: rotate(4deg); }
+    }
+    .mascot-anim-bounce { animation: mascot-bounce 2.8s ease-in-out infinite; }
+    .mascot-anim-sway   { animation: mascot-sway   3.5s ease-in-out infinite; }
+  </style>
+</head>
+<body class="desert-bg">
+
+<!-- ═══════════════════════════════════════════════ NAV ═══ -->
+<nav class="sticky top-0 z-50 backdrop-blur-md bg-[#F5EDD8]/80 border-b border-[#E8D4A8]/60">
+  <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <span class="text-3xl">🌵</span>
+      <span style="font-family:'Fredoka One',cursive; font-size:1.6rem; color:#7B4B2A; letter-spacing:0.02em;">PapiaGo</span>
+    </div>
+    <div class="hidden md:flex items-center gap-8 text-sm">
+      <a href="#features">Features</a>
+      <a href="#how">How it works</a>
+      <a href="#screenshots">Preview</a>
+    </div>
+    <a href="#download" class="btn-primary text-sm py-3 px-6" style="font-size:0.95rem; padding:10px 24px;">
+      Start Learning →
+    </a>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════ HERO ═══ -->
+<section class="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-16 pb-24 overflow-hidden">
+
+  <!-- blobs -->
+  <div class="blob w-96 h-96 bg-coral"    style="top:-100px; left:-80px;"></div>
+  <div class="blob w-80 h-80 bg-gold"     style="bottom:0;    right:-60px;"></div>
+  <div class="blob w-72 h-72 bg-turquoise" style="top:40%;    left:5%;"></div>
+
+  <!-- floating emoji decorations -->
+  <span class="absolute top-24 left-8 text-4xl float"  style="opacity:0.7;">🌵</span>
+  <span class="absolute top-32 right-12 text-3xl float2" style="opacity:0.8;">🌴</span>
+  <span class="absolute bottom-32 left-16 text-5xl float3" style="opacity:0.6;">🏝️</span>
+  <span class="absolute top-44 left-1/4 text-2xl float"  style="opacity:0.5; animation-delay:2s;">⭐</span>
+  <span class="absolute bottom-20 right-1/4 text-3xl float2" style="opacity:0.6; animation-delay:1s;">🔥</span>
+  <span class="absolute top-16 right-1/3 text-2xl float3" style="opacity:0.5;">✨</span>
+
+  <!-- pill -->
+  <div class="pill bg-[#FFD166]/60 text-[#7B4B2A] mb-6 fade-up">🌊 The language of the islands</div>
+
+  <!-- main title -->
+  <h1 class="hero-title fade-up delay-1 relative z-10 mb-4">
+    Papia<span style="color:#FF7043;">Go</span>
+  </h1>
+
+  <!-- tagline -->
+  <p class="text-xl md:text-2xl font-bold text-[#A0683E] max-w-xl mx-auto mb-8 fade-up delay-2" style="line-height:1.5;">
+    Discover Papiamento — the vibrant creole language of Aruba, Bonaire & Curaçao — one fun lesson at a time.
+  </p>
+
+  <!-- CTA buttons -->
+  <div class="flex flex-wrap gap-4 justify-center fade-up delay-3 mb-16">
+    <a href="#download" class="btn-primary">
+      <span>🚀</span> Download Free
+    </a>
+    <a href="#features" class="btn-secondary">
+      See Features
+    </a>
+  </div>
+
+  <!-- phones hero -->
+  <div class="flex justify-center items-end gap-6 md:gap-10 scale-in delay-4 relative z-10" style="position:relative;">
+    <!-- Bubi peeking bottom-left of phone cluster -->
+    <div style="position:absolute; bottom:-30px; left:-20px; z-index:30;">
+      <div style="position:relative; display:inline-block;">
+        <div class="mascot-bubble below" style="position:absolute; bottom:110%; left:50%; transform:translateX(-50%); font-size:0.75rem;">
+          Masha bon! 🎉
+        </div>
+        <img src="assets/bubi-surprised.gif" alt="Bubi the parakeet" class="mascot-anim-bounce" style="width:90px; height:90px; object-fit:contain; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.15));" />
+      </div>
+    </div>
+    <div class="phone-mockup tilted-left">
+      <img src="assets/screen-3.png" alt="PapiaGo lessons screen" />
+    </div>
+    <div class="phone-mockup" style="transform: translateY(-20px); z-index:2;">
+      <img src="assets/screen-4.png" alt="PapiaGo quiz screen" />
+    </div>
+    <div class="phone-mockup tilted-right">
+      <img src="assets/screen-1.png" alt="PapiaGo leaderboard screen" />
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ MARQUEE STRIP ═══ -->
+<div class="marquee-wrapper py-5 overflow-hidden" style="background:linear-gradient(135deg,#FF7043,#F4A828); position:relative;">
+  <!-- Poes standing at the edge of the marquee strip looking unimpressed -->
+  <div style="position:absolute; right:24px; top:50%; transform:translateY(-50%); z-index:20; display:flex; align-items:center; gap:8px;">
+    <div class="mascot-bubble left" style="font-size:0.75rem;">Not impressed.</div>
+    <img src="assets/poes-shrug.gif" alt="Poes the cat" class="mascot-anim-sway" style="width:64px; height:64px; object-fit:contain; filter:drop-shadow(0 2px 8px rgba(0,0,0,0.2));" />
+  </div>
+  <div class="marquee-track">
+    <span class="text-white font-black text-lg mr-12 tracking-widest uppercase">🌵 Learn Papiamento &nbsp;•&nbsp; 🔥 Daily Streaks &nbsp;•&nbsp; 🏆 Leaderboards &nbsp;•&nbsp; 🎯 Bite-sized Lessons &nbsp;•&nbsp; 🛍️ Island Shop &nbsp;•&nbsp; ⭐ Earn XP &nbsp;•&nbsp;</span>
+    <span class="text-white font-black text-lg mr-12 tracking-widest uppercase">🌵 Learn Papiamento &nbsp;•&nbsp; 🔥 Daily Streaks &nbsp;•&nbsp; 🏆 Leaderboards &nbsp;•&nbsp; 🎯 Bite-sized Lessons &nbsp;•&nbsp; 🛍️ Island Shop &nbsp;•&nbsp; ⭐ Earn XP &nbsp;•&nbsp;</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ FEATURES ═══════ -->
+<section id="features" class="max-w-6xl mx-auto px-6 py-24">
+  <div class="text-center mb-16 reveal">
+    <div class="pill bg-[#2BBCB4]/15 text-[#2BBCB4] mb-4">What's inside</div>
+    <h2 class="section-title">Everything you need<br/>to fall in love with Papiamento</h2>
+    <p class="text-[#A0683E] text-lg mt-4 max-w-lg mx-auto font-semibold">Fun, science-backed features designed to keep you learning every single day.</p>
+  </div>
+
+  <div class="grid md:grid-cols-3 gap-8">
+    <!-- card 1 -->
+    <div class="feature-card reveal">
+      <div class="text-5xl mb-4">📚</div>
+      <h3 style="font-family:'Fredoka One',cursive; font-size:1.5rem; color:#7B4B2A;" class="mb-2">Bite-sized Lessons</h3>
+      <p class="text-[#A0683E] font-semibold leading-relaxed">Short, fun exercises guided by Bubi — your island mascot. Learn at your own pace, anywhere, anytime.</p>
+    </div>
+    <!-- card 2 -->
+    <div class="feature-card reveal" style="transition-delay:0.1s;">
+      <div class="text-5xl mb-4">🏆</div>
+      <h3 style="font-family:'Fredoka One',cursive; font-size:1.5rem; color:#7B4B2A;" class="mb-2">Island Leaderboards</h3>
+      <p class="text-[#A0683E] font-semibold leading-relaxed">Compete with learners across the island every week. Climb the ranks, earn XP, and claim your crown.</p>
+    </div>
+    <!-- card 3 -->
+    <div class="feature-card reveal" style="transition-delay:0.2s;">
+      <div class="text-5xl mb-4">🎯</div>
+      <h3 style="font-family:'Fredoka One',cursive; font-size:1.5rem; color:#7B4B2A;" class="mb-2">Daily Island Quests</h3>
+      <p class="text-[#A0683E] font-semibold leading-relaxed">Fresh quests every sunrise to keep you motivated. Earn rewards, level up, and never miss a day.</p>
+    </div>
+    <!-- card 4 -->
+    <div class="feature-card reveal" style="transition-delay:0.05s;">
+      <div class="text-5xl mb-4">🔥</div>
+      <h3 style="font-family:'Fredoka One',cursive; font-size:1.5rem; color:#7B4B2A;" class="mb-2">Streak Tracking</h3>
+      <p class="text-[#A0683E] font-semibold leading-relaxed">Build unstoppable learning habits. Track your streak, use a freeze to protect it, and watch your fluency grow.</p>
+    </div>
+    <!-- card 5 -->
+    <div class="feature-card reveal" style="transition-delay:0.15s;">
+      <div class="text-5xl mb-4">🌵</div>
+      <h3 style="font-family:'Fredoka One',cursive; font-size:1.5rem; color:#7B4B2A;" class="mb-2">Cadushi Shop</h3>
+      <p class="text-[#A0683E] font-semibold leading-relaxed">Spend your earned cadushi on power-ups, streak freezes, heart refills, and exclusive bundles.</p>
+    </div>
+    <!-- card 6 -->
+    <div class="feature-card reveal" style="transition-delay:0.25s;">
+      <div class="text-5xl mb-4">💎</div>
+      <h3 style="font-family:'Fredoka One',cursive; font-size:1.5rem; color:#7B4B2A;" class="mb-2">Diamond Ranks</h3>
+      <p class="text-[#A0683E] font-semibold leading-relaxed">Progress through ranks from beginner to Diamond. Show off your badge and inspire others on the island.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ HOW IT WORKS ═══ -->
+<section id="how" style="background:linear-gradient(135deg, #FFF8EC 0%, #FFF0E0 100%);" class="py-24 px-6 relative overflow-hidden">
+  <div class="blob w-64 h-64 bg-gold"      style="top:-40px; right:-40px; opacity:0.15;"></div>
+  <div class="blob w-64 h-64 bg-turquoise" style="bottom:-40px; left:-40px; opacity:0.12;"></div>
+
+  <div class="max-w-4xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <div class="pill bg-[#FF6B9D]/15 text-[#FF6B9D] mb-4">Simple as 1-2-3</div>
+      <h2 class="section-title">Start speaking Papiamento<br/>in minutes</h2>
+    </div>
+
+    <div class="space-y-10">
+      <!-- step 1 -->
+      <div class="flex items-start gap-6 reveal">
+        <div class="step-number" style="background:linear-gradient(135deg,#FF7043,#F4A828);">1</div>
+        <div class="feature-card flex-1">
+          <h3 style="font-family:'Fredoka One',cursive; font-size:1.4rem; color:#7B4B2A;" class="mb-1">Download & set up your island</h3>
+          <p class="text-[#A0683E] font-semibold">Create your profile, pick your avatar, and choose your learning goals — it takes under 2 minutes.</p>
+        </div>
+      </div>
+      <!-- step 2 -->
+      <div class="flex items-start gap-6 reveal">
+        <div class="step-number" style="background:linear-gradient(135deg,#2BBCB4,#4DD9D1);">2</div>
+        <div class="feature-card flex-1" style="position:relative; overflow:visible;">
+          <h3 style="font-family:'Fredoka One',cursive; font-size:1.4rem; color:#7B4B2A;" class="mb-1">Complete bite-sized daily lessons</h3>
+          <p class="text-[#A0683E] font-semibold">Bubi, your island guide, walks you through fun exercises: vocabulary, phrases, and listening challenges.</p>
+          <!-- Bubi peeking from card corner -->
+          <div style="position:absolute; bottom:-30px; right:-20px; display:none;" class="md:block">
+            <img src="assets/bubi-surprised.gif" alt="Bubi" class="mascot-anim-bounce" style="width:70px; height:70px; object-fit:contain; filter:drop-shadow(0 3px 8px rgba(0,0,0,0.12)); animation-delay:1s;" />
+          </div>
+        </div>
+      </div>
+      <!-- step 3 -->
+      <div class="flex items-start gap-6 reveal">
+        <div class="step-number" style="background:linear-gradient(135deg,#FF6B9D,#FF9DBF);">3</div>
+        <div class="feature-card flex-1" style="position:relative; overflow:visible;">
+          <h3 style="font-family:'Fredoka One',cursive; font-size:1.4rem; color:#7B4B2A;" class="mb-1">Compete, earn, and level up</h3>
+          <p class="text-[#A0683E] font-semibold">Rack up XP, climb the weekly leaderboard, complete quests, and spend your cadushi in the island shop.</p>
+          <!-- Poes peeking from corner -->
+          <div style="position:absolute; bottom:-28px; right:-16px; display:none;" class="md:block">
+            <div style="position:relative;">
+              <div class="mascot-bubble right" style="position:absolute; right:76px; top:50%; transform:translateY(-50%);">Earn cadushi.</div>
+              <img src="assets/poes-shrug.gif" alt="Poes" class="mascot-anim-sway" style="width:68px; height:68px; object-fit:contain; filter:drop-shadow(0 3px 8px rgba(0,0,0,0.12));" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ SCREENSHOTS ════ -->
+<section id="screenshots" class="py-24 px-6 overflow-hidden">
+  <div class="max-w-6xl mx-auto">
+
+    <!-- ── Row 1: Lessons (image left, text right) ── -->
+    <div class="flex flex-col md:flex-row items-center gap-12 mb-28 reveal">
+      <div class="flex justify-center md:w-1/2 relative">
+        <div class="blob w-80 h-80 bg-coral" style="top:-40px; left:-40px; opacity:0.15; filter:blur(50px);"></div>
+        <div class="phone-mockup float relative z-10">
+          <img src="assets/screen-3.png" alt="Bite-sized lessons" />
+        </div>
+      </div>
+      <div class="md:w-1/2 text-center md:text-left" style="position:relative;">
+        <div class="pill bg-[#FF7043]/15 text-[#FF7043] mb-4">Learn</div>
+        <h2 class="section-title mb-4">BITE-SIZED<br/>LESSONS</h2>
+        <!-- Bubi floating top-right of this text block -->
+        <div style="position:absolute; top:-20px; right:0; display:none;" class="md:block">
+          <div style="position:relative; display:inline-block;">
+            <div class="mascot-bubble below" style="position:absolute; bottom:105%; left:50%; transform:translateX(-50%);">Let's go! 🐦</div>
+            <img src="assets/bubi-surprised.gif" alt="Bubi" class="mascot-anim-bounce" style="width:80px; height:80px; object-fit:contain; filter:drop-shadow(0 4px 10px rgba(0,0,0,0.12)); animation-delay:0.5s;" />
+          </div>
+        </div>
+        <p class="text-[#A0683E] font-semibold text-lg leading-relaxed mb-6">
+          Fun exercises with Bubi, your island guide. Start with your first 50 Papiamento words, unlock new topics, and build real fluency — one mini-lesson at a time.
+        </p>
+        <ul class="space-y-3 text-[#7B4B2A] font-bold text-base">
+          <li class="flex items-center gap-3"><span class="text-2xl">🦜</span> Guided by Bubi, your parakeet mascot</li>
+          <li class="flex items-center gap-3"><span class="text-2xl">🗂️</span> Structured into easy topic modules</li>
+          <li class="flex items-center gap-3"><span class="text-2xl">⚡</span> Daily quests refresh every sunrise</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ── Row 2: Leaderboard (text left, image right) ── -->
+    <div class="flex flex-col-reverse md:flex-row items-center gap-12 mb-28 reveal">
+      <div class="md:w-1/2 text-center md:text-left">
+        <div class="pill bg-[#F4A828]/20 text-[#C47E00] mb-4">Compete</div>
+        <h2 class="section-title mb-4">COMPETE WITH<br/>THE ISLAND</h2>
+        <p class="text-[#A0683E] font-semibold text-lg leading-relaxed mb-6">
+          Weekly leaderboards and island rankings keep the motivation high. See where you stand among friends and the whole island community.
+        </p>
+        <ul class="space-y-3 text-[#7B4B2A] font-bold text-base">
+          <li class="flex items-center gap-3"><span class="text-2xl">🏅</span> Top 3 podium with live rankings</li>
+          <li class="flex items-center gap-3"><span class="text-2xl">🔄</span> Weekly reset — every week is a fresh start</li>
+          <li class="flex items-center gap-3"><span class="text-2xl">💎</span> Diamond badge for top performers</li>
+        </ul>
+      </div>
+      <div class="flex justify-center md:w-1/2 relative">
+        <div class="blob w-80 h-80 bg-gold" style="top:-40px; right:-40px; opacity:0.18; filter:blur(50px);"></div>
+        <div class="phone-mockup float2 relative z-10">
+          <img src="assets/screen-1.png" alt="Island leaderboard" />
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Row 3: Shop (image left, text right) ── -->
+    <div class="flex flex-col md:flex-row items-center gap-12 reveal">
+      <div class="flex justify-center md:w-1/2 relative">
+        <div class="blob w-80 h-80 bg-turquoise" style="bottom:-40px; left:-40px; opacity:0.15; filter:blur(50px);"></div>
+        <div class="phone-mockup float3 relative z-10">
+          <img src="assets/screen-5.png" alt="Cadushi shop" />
+        </div>
+      </div>
+      <div class="md:w-1/2 text-center md:text-left" style="position:relative;">
+        <div class="pill bg-[#2BBCB4]/15 text-[#2BBCB4] mb-4">Rewards</div>
+        <h2 class="section-title mb-4">YOUR ISLAND<br/>SHOP</h2>
+        <!-- Poes sitting top-right, arms-crossed energy -->
+        <div style="position:absolute; top:-30px; right:0; display:none;" class="md:block">
+          <div style="position:relative; display:inline-block;">
+            <div class="mascot-bubble below" style="position:absolute; bottom:105%; left:50%; transform:translateX(-50%); white-space:nowrap;">Hm. Not enough cadushi.</div>
+            <img src="assets/poes-shrug.gif" alt="Poes the cat" class="mascot-anim-sway" style="width:80px; height:80px; object-fit:contain; filter:drop-shadow(0 4px 10px rgba(0,0,0,0.12));" />
+          </div>
+        </div>
+        <p class="text-[#A0683E] font-semibold text-lg leading-relaxed mb-6">
+          Power-ups, cadushi bundles & more. Spend your hard-earned cadushi on streak freezes, heart refills, energy boosts, and exclusive bundles.
+        </p>
+        <ul class="space-y-3 text-[#7B4B2A] font-bold text-base">
+          <li class="flex items-center gap-3"><span class="text-2xl">❤️</span> Heart Refill — bounce back instantly</li>
+          <li class="flex items-center gap-3"><span class="text-2xl">❄️</span> Streak Freeze — protect your record</li>
+          <li class="flex items-center gap-3"><span class="text-2xl">⚡</span> Energy Refill — keep the practice going</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ── Row 4: Quiz (text left, image right) ── -->
+    <div class="flex flex-col-reverse md:flex-row items-center gap-12 mb-28 reveal">
+      <div class="md:w-1/2 text-center md:text-left">
+        <div class="pill bg-[#FF6B9D]/15 text-[#FF6B9D] mb-4">Practice</div>
+        <h2 class="section-title mb-4">INTERACTIVE<br/>QUIZZES</h2>
+        <p class="text-[#A0683E] font-semibold text-lg leading-relaxed mb-6">
+          Test your knowledge with multiple-choice questions, contextual hints, and island-flavoured explanations. Every answer teaches you something new about Papiamento and the culture behind it.
+        </p>
+        <ul class="space-y-3 text-[#7B4B2A] font-bold text-base">
+          <li class="flex items-center gap-3"><span class="text-2xl">🧠</span> Multiple-choice & contextual hints</li>
+          <li class="flex items-center gap-3"><span class="text-2xl">🏝️</span> Cultural context with every answer</li>
+          <li class="flex items-center gap-3"><span class="text-2xl">📈</span> Track your progress as you go</li>
+        </ul>
+      </div>
+      <div class="flex justify-center md:w-1/2 relative">
+        <div class="blob w-80 h-80 bg-pink" style="top:-40px; right:-40px; opacity:0.15; filter:blur(50px);"></div>
+        <div class="phone-mockup float relative z-10">
+          <img src="assets/screen-4.png" alt="Interactive quiz" />
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Row 5: Onboarding (image left, text right) ── -->
+    <div class="flex flex-col md:flex-row items-center gap-12 mb-28 reveal">
+      <div class="flex justify-center md:w-1/2 relative">
+        <div class="blob w-80 h-80 bg-gold" style="top:-40px; left:-40px; opacity:0.15; filter:blur(50px);"></div>
+        <div class="phone-mockup float2 relative z-10">
+          <img src="assets/screen-2.png" alt="Onboarding language selection" />
+        </div>
+      </div>
+      <div class="md:w-1/2 text-center md:text-left">
+        <div class="pill bg-[#F4A828]/20 text-[#C47E00] mb-4">Get started</div>
+        <h2 class="section-title mb-4">SET UP IN<br/>SECONDS</h2>
+        <p class="text-[#A0683E] font-semibold text-lg leading-relaxed mb-6">
+          Pick your language, set your pace, and jump straight into your first lesson. No lengthy sign-up flows — just you and the island, ready to go.
+        </p>
+        <ul class="space-y-3 text-[#7B4B2A] font-bold text-base">
+          <li class="flex items-center gap-3"><span class="text-2xl">🌍</span> Choose Papiamento or Papiamentu</li>
+          <li class="flex items-center gap-3"><span class="text-2xl">⚡</span> Start your first lesson in under a minute</li>
+          <li class="flex items-center gap-3"><span class="text-2xl">🎯</span> Guided onboarding with island quests</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ── Row 6: Dark Mode (text left, image right) ── -->
+    <div class="flex flex-col-reverse md:flex-row items-center gap-12 reveal">
+      <div class="md:w-1/2 text-center md:text-left">
+        <div class="pill bg-[#7B4B2A]/15 text-[#7B4B2A] mb-4">Night owl</div>
+        <h2 class="section-title mb-4">DARK MODE<br/>INCLUDED</h2>
+        <p class="text-[#A0683E] font-semibold text-lg leading-relaxed mb-6">
+          Learn late into the evening without straining your eyes. PapiaGo's dark mode gives the full island experience with a smooth, easy-on-the-eyes theme.
+        </p>
+        <ul class="space-y-3 text-[#7B4B2A] font-bold text-base">
+          <li class="flex items-center gap-3"><span class="text-2xl">🌙</span> Easy on the eyes, day or night</li>
+          <li class="flex items-center gap-3"><span class="text-2xl">🔄</span> Syncs with your device settings</li>
+          <li class="flex items-center gap-3"><span class="text-2xl">🎨</span> Same island vibe, darker palette</li>
+        </ul>
+      </div>
+      <div class="flex justify-center md:w-1/2 relative">
+        <div class="blob w-80 h-80 bg-cactus" style="top:-40px; right:-40px; opacity:0.15; filter:blur(50px);"></div>
+        <div class="phone-mockup float3 relative z-10">
+          <img src="assets/dark-mode.png" alt="Dark mode" />
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ STATS STRIP ════ -->
+<div style="background:linear-gradient(135deg,#2BBCB4,#4DD9D1);" class="py-16 px-6">
+  <div class="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+    <div class="reveal">
+      <div style="font-family:'Fredoka One',cursive; font-size:2.8rem; color:white; line-height:1;">500+</div>
+      <div class="text-white/80 font-bold mt-1">Vocabulary words</div>
+    </div>
+    <div class="reveal" style="transition-delay:0.1s;">
+      <div style="font-family:'Fredoka One',cursive; font-size:2.8rem; color:white; line-height:1;">50+</div>
+      <div class="text-white/80 font-bold mt-1">Daily quests</div>
+    </div>
+    <div class="reveal" style="transition-delay:0.2s;">
+      <div style="font-family:'Fredoka One',cursive; font-size:2.8rem; color:white; line-height:1;">∞</div>
+      <div class="text-white/80 font-bold mt-1">Fun you'll have</div>
+    </div>
+    <div class="reveal" style="transition-delay:0.3s;">
+      <div style="font-family:'Fredoka One',cursive; font-size:2.8rem; color:white; line-height:1;">1</div>
+      <div class="text-white/80 font-bold mt-1">Language. Yours.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ CTA DOWNLOAD ══ -->
+<section id="download" class="py-28 px-6 relative overflow-hidden text-center">
+  <div class="blob w-96 h-96 bg-coral"     style="top:-60px; right:-60px;"></div>
+  <div class="blob w-96 h-96 bg-gold"      style="bottom:-60px; left:-60px;"></div>
+
+  <div class="max-w-2xl mx-auto relative z-10 reveal">
+    <!-- mascot duo flanking the CTA -->
+    <div style="display:flex; justify-content:center; align-items:flex-end; gap:24px; margin-bottom:8px;">
+      <div style="position:relative; display:inline-block; text-align:center;">
+        <div class="mascot-bubble below" style="position:absolute; bottom:105%; left:50%; transform:translateX(-50%);">Download! 🎉</div>
+        <img src="assets/bubi-surprised.gif" alt="Bubi" class="mascot-anim-bounce" style="width:100px; height:100px; object-fit:contain; filter:drop-shadow(0 6px 16px rgba(0,0,0,0.15));" />
+      </div>
+      <div style="position:relative; display:inline-block; text-align:center;">
+        <div class="mascot-bubble below" style="position:absolute; bottom:105%; left:50%; transform:translateX(-50%); white-space:nowrap;">…fine. It's good.</div>
+        <img src="assets/poes-shrug.gif" alt="Poes" class="mascot-anim-sway" style="width:88px; height:88px; object-fit:contain; filter:drop-shadow(0 6px 16px rgba(0,0,0,0.12)); animation-delay:0.8s;" />
+      </div>
+    </div>
+    <h2 class="section-title mb-4" style="font-size:clamp(2.5rem,7vw,4rem);">
+      Ready to speak<br/>like an islander?
+    </h2>
+    <p class="text-[#A0683E] font-bold text-xl mb-10">
+      Download PapiaGo for free and start your Papiamento journey today. Masha bon!
+    </p>
+    <div class="flex flex-wrap gap-4 justify-center">
+      <a href="#" class="btn-primary text-xl py-5 px-10">
+        <span>📱</span> App Store
+      </a>
+      <a href="#" class="btn-secondary text-xl py-5 px-10">
+        <span>🤖</span> Google Play
+      </a>
+    </div>
+    <p class="mt-6 text-[#A0683E] font-semibold text-sm">Free to download · No credit card required · Available on iOS & Android</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ FOOTER ════════ -->
+<footer class="py-12 px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="flex flex-col md:flex-row justify-between items-start gap-8 mb-10">
+      <div>
+        <div class="flex items-center gap-3 mb-4">
+          <img src="assets/bubi-surprised.gif" alt="Bubi" style="width:40px; height:40px; object-fit:contain;" />
+          <span style="font-family:'Fredoka One',cursive; font-size:1.8rem; color:#F5EDD8;">PapiaGo</span>
+        </div>
+        <p style="color:#C4A882; max-width:280px; font-weight:600; line-height:1.6;">
+          The fun way to learn Papiamento — the vibrant creole language of the ABC islands.
+        </p>
+      </div>
+      <div class="grid grid-cols-2 gap-x-16 gap-y-3">
+        <a href="#features" class="footer-link" style="color:#C4A882; font-weight:700; text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='#FFD166'" onmouseout="this.style.color='#C4A882'">Features</a>
+        <a href="#" style="color:#C4A882; font-weight:700; text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='#FFD166'" onmouseout="this.style.color='#C4A882'">App Store</a>
+        <a href="#how" style="color:#C4A882; font-weight:700; text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='#FFD166'" onmouseout="this.style.color='#C4A882'">How it works</a>
+        <a href="#" style="color:#C4A882; font-weight:700; text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='#FFD166'" onmouseout="this.style.color='#C4A882'">Google Play</a>
+        <a href="#screenshots" style="color:#C4A882; font-weight:700; text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='#FFD166'" onmouseout="this.style.color='#C4A882'">Preview</a>
+        <a href="/games/papiago/privacy-terms" style="color:#C4A882; font-weight:700; text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='#FFD166'" onmouseout="this.style.color='#C4A882'">Privacy & Terms</a>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,0.1); padding-top:24px; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:12px;">
+      <p style="color:#C4A882; font-weight:600; font-size:0.9rem;">© 2026 PapiaGo. Made with ❤️ on the island.</p>
+      <div style="display:flex; gap:16px;">
+        <span style="color:#C4A882; font-size:0.9rem; font-weight:600;">🌵 Papia bon!</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+</body>
+</html>
