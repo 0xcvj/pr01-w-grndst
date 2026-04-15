@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Exact AI Coding Setup — Free Guide by Jace</title>
+  <meta name="description" content="The tools, models, and workflow I use to ship apps solo with AI. Free PDF guide.">
+  <meta property="og:title" content="My Exact AI Coding Setup — Free Guide">
+  <meta property="og:description" content="The tools, models, and workflow I use to ship apps solo with AI.">
+  <meta property="og:url" content="https://grnd.studio/ai-setup">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+  <style>
+    @font-face {
+      font-family: 'sharpGrotesk';
+      src: url('../fonts/SharpGrotesk_SemiBold20.otf') format('opentype');
+      font-weight: 600;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'hostGrotesk';
+      src: url('../fonts/HostGrotesk_Regular.ttf') format('truetype');
+      font-weight: 400;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'hostGrotesk';
+      src: url('../fonts/HostGrotesk_Medium.ttf') format('truetype');
+      font-weight: 500;
+      font-display: swap;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0a0a0a;
+      color: #e0e0e0;
+      font-family: 'hostGrotesk', -apple-system, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 480px;
+      width: 100%;
+    }
+
+    .label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #666;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-family: 'sharpGrotesk', sans-serif;
+      font-weight: 600;
+      font-size: 36px;
+      line-height: 1.1;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+
+    .subhead {
+      font-size: 17px;
+      line-height: 1.5;
+      color: #999;
+      margin-bottom: 32px;
+    }
+
+    .points {
+      list-style: none;
+      margin-bottom: 36px;
+    }
+
+    .points li {
+      padding: 8px 0;
+      padding-left: 20px;
+      position: relative;
+      font-size: 15px;
+      line-height: 1.5;
+      color: #ccc;
+    }
+
+    .points li::before {
+      content: '>';
+      position: absolute;
+      left: 0;
+      color: #666;
+      font-family: monospace;
+    }
+
+    .form-wrap {
+      display: flex;
+      gap: 8px;
+    }
+
+    input[type="email"] {
+      flex: 1;
+      padding: 14px 16px;
+      background: #161616;
+      border: 1px solid #2a2a2a;
+      border-radius: 6px;
+      color: #fff;
+      font-family: 'hostGrotesk', sans-serif;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input[type="email"]:focus {
+      border-color: #444;
+    }
+
+    input[type="email"]::placeholder {
+      color: #555;
+    }
+
+    button {
+      padding: 14px 24px;
+      background: #fff;
+      color: #0a0a0a;
+      border: none;
+      border-radius: 6px;
+      font-family: 'hostGrotesk', sans-serif;
+      font-weight: 500;
+      font-size: 15px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      white-space: nowrap;
+    }
+
+    button:hover { opacity: 0.85; }
+    button:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .trust {
+      margin-top: 12px;
+      font-size: 13px;
+      color: #555;
+    }
+
+    .success {
+      padding: 20px;
+      background: #111;
+      border: 1px solid #2a2a2a;
+      border-radius: 6px;
+      text-align: center;
+      color: #ccc;
+      font-size: 16px;
+      display: none;
+    }
+
+    .error-msg {
+      margin-top: 8px;
+      font-size: 13px;
+      color: #e55;
+      display: none;
+    }
+
+    @media (max-width: 500px) {
+      h1 { font-size: 28px; }
+      .form-wrap { flex-direction: column; }
+      button { width: 100%; }
+    }
+  </style>
+  <!-- Google tag -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-LG43PWKZNK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-LG43PWKZNK');
+  </script>
+</head>
+<body>
+  <div class="container">
+    <p class="label">Free Guide</p>
+    <h1>My Exact AI Coding Setup</h1>
+    <p class="subhead">The tools, models, and workflow I use to ship apps solo with AI.</p>
+
+    <ul class="points">
+      <li>Which AI tools I use daily and why</li>
+      <li>How I wire Claude Code + Ollama + OpenClaw together</li>
+      <li>The exact plugins and MCP servers in my VSCode</li>
+      <li>My full workflow from idea to shipped app</li>
+    </ul>
+
+    <div id="formSection">
+      <div class="form-wrap">
+        <input type="email" id="emailInput" placeholder="Enter your email" autocomplete="email" required>
+        <button id="submitBtn" onclick="subscribe()">Send me the guide</button>
+      </div>
+      <p class="trust">No spam. Just one email with the PDF.</p>
+      <p class="error-msg" id="errorMsg">Something went wrong. Try again.</p>
+    </div>
+
+    <div class="success" id="successMsg">
+      Check your inbox.
+    </div>
+  </div>
+
+  <script>
+    async function subscribe() {
+      const input = document.getElementById('emailInput');
+      const btn = document.getElementById('submitBtn');
+      const errorMsg = document.getElementById('errorMsg');
+      const email = input.value.trim();
+
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        input.style.borderColor = '#e55';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+      errorMsg.style.display = 'none';
+      input.style.borderColor = '#2a2a2a';
+
+      try {
+        const res = await fetch('https://api.grnd.studio/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, source: 'ai-setup' }),
+        });
+
+        const data = await res.json();
+
+        if (res.ok && data.ok) {
+          document.getElementById('formSection').style.display = 'none';
+          document.getElementById('successMsg').style.display = 'block';
+          gtag('event', 'lead_magnet_signup', { source: 'ai-setup' });
+        } else {
+          throw new Error(data.error || 'Request failed');
+        }
+      } catch (e) {
+        errorMsg.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'Send me the guide';
+      }
+    }
+
+    document.getElementById('emailInput').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') subscribe();
+    });
+  </script>
+</body>
+</html>
